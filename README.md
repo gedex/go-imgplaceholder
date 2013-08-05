@@ -4,7 +4,7 @@ go-imgplaceholder
 ## Install
 
 ~~~text
-$ go get github.com/gedex/go-imgplaceholder
+$ go install github.com/gedex/go-imgplaceholder
 ~~~
 
 ## Usage
