@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<title>{{.Title}}</title>
+</head>
+<body>
+	<ul>
+		<li>
+			<h3>Specify width</h3>
+			<code>http://{{.Req.Host}}/250</code><br>
+			<img src="http://{{.Req.Host}}/250">
+		</li>
+		<li>
+			<h3>Specify width x height</h3>
+			<code>http://{{.Req.Host}}/250x120</code><br>
+			<img src="http://{{.Req.Host}}/250x120">
+		</li>
+		<li>
+			<h3>Specify background color</h3>
+			<code>http://{{.Req.Host}}/250x120/ff0000</code><br>
+			<img src="http://{{.Req.Host}}/250x120/ff0000">
+		</li>
+		<li>
+			<h3>Specify background and foreground colors</h3>
+			<code>http://{{.Req.Host}}/250x120/ccc/333</code><br>
+			<img src="http://{{.Req.Host}}/250x120/ccc/333">
+		</li>
+	</ul>
+</body>
+</html>
