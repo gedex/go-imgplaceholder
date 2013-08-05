@@ -1,22 +1,28 @@
 package main
 
 import (
+	"go/build"
 	"image"
 	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 
 	"code.google.com/p/freetype-go/freetype"
 	"code.google.com/p/freetype-go/freetype/truetype"
 )
 
 var (
-	fontFile   = "./luxi-fonts/luxisr.ttf"
+	fontFile   = "luxi-fonts/luxisr.ttf"
 	dpi        = 72.0
 	txtPortion = 25 // percentage
 )
 
 func drawString(c *canvas, s string) error {
 	font, err := loadFont()
+	if err != nil {
+		log.Println(err)
+	}
 
 	var sider int
 	if c.h > c.w {
@@ -65,6 +71,13 @@ func drawString(c *canvas, s string) error {
 }
 
 func loadFont() (font *truetype.Font, err error) {
+	if pkg, err := build.Import("github.com/gedex/go-imgplaceholder", "", build.FindOnly); err == nil {
+		p := filepath.Join(pkg.Dir, fontFile)
+		if _, err := os.Stat(p); err == nil {
+			fontFile = p
+		}
+	}
+
 	fontBytes, err := ioutil.ReadFile(fontFile)
 	if err != nil {
 		return nil, err

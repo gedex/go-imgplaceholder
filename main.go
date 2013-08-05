@@ -3,12 +3,15 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"go/build"
 	"html/template"
 	"image"
 	"image/color"
 	"image/draw"
 	"image/png"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -24,7 +27,7 @@ const (
 )
 
 var (
-	templates = template.Must(template.ParseFiles("home.html"))
+	templates *template.Template
 )
 
 type canvas struct {
@@ -46,6 +49,20 @@ func (c *canvas) fillBackground() {
 
 func (c *canvas) fillString(s string) {
 	drawString(c, s)
+}
+
+func init() {
+	homeHTMLPath := "home.html"
+	if pkg, err := build.Import("github.com/gedex/go-imgplaceholder", "", build.FindOnly); err == nil {
+		p := filepath.Join(pkg.Dir, homeHTMLPath)
+		if _, err := os.Stat(p); err == nil {
+			homeHTMLPath = p
+		}
+	}
+
+	fmt.Println(homeHTMLPath)
+
+	templates = template.Must(template.ParseFiles(homeHTMLPath))
 }
 
 func main() {
